@@ -69,3 +69,8 @@ LOCAL_SHARED_LIBRARIES += \
 
 LOCAL_STATIC_LIBRARIES += \
 	libfdlibm
+
+ifneq ($(DEBUG_FORCE_STRICT_ALIASING),true)
+LOCAL_CFLAGS := -fno-strict-aliasing
+LOCAL_CPPFLAGS := -fno-strict-aliasing
+endif

@@ -29,8 +29,9 @@ core_local_path := $(LOCAL_PATH)
 # Include a submakefile, resolve its source file locations,
 # and stick them on core_src_files.  The submakefiles are
 # free to append to LOCAL_SRC_FILES, LOCAL_C_INCLUDES,
-# LOCAL_SHARED_LIBRARIES, or LOCAL_STATIC_LIBRARIES, but nothing
-# else. All other LOCAL_* variables will be ignored.
+# LOCAL_SHARED_LIBRARIES, LOCAL_STATIC_LIBRARIES, LOCAL_CFLAGS,
+# or LOACL_CPPFLAGS but nothing else.
+# All other LOCAL_* variables will be ignored.
 #
 # $(1): directory containing the makefile to include
 define include-core-native-dir
@@ -66,11 +67,14 @@ $(foreach dir, \
 core_c_includes := libcore/include $(LOCAL_C_INCLUDES)
 core_shared_libraries := $(LOCAL_SHARED_LIBRARIES)
 core_static_libraries := $(LOCAL_STATIC_LIBRARIES)
-core_cflags := -Wall -Wextra -Werror
+core_cflags := $(sort $(LOCAL_CFLAGS))
+core_cflags += -Wall -Wextra -Werror
+core_cppflags := $(sort $(LOCAL_CPPFLAGS))
 core_cppflags += -std=gnu++11
 
 core_test_files := \
   luni/src/test/native/test_openssl_engine.cpp \
+
 
 #
 # Build for the target (device).
